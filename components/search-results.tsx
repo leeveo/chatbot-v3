@@ -67,7 +67,7 @@ export function SearchResults({ results }: SearchResultsProps) {
                 className="text-muted-foreground"
                 onClick={handleViewMore}
               >
-                View {additionalResultsCount} more
+                En voir {additionalResultsCount} de plus
               </Button>
             </CardContent>
           </Card>

@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
           {/* Image ronde */}
           <div className="rounded-full mx-auto mt-2 border-solid border-4 bg-white border-white-600 shadow-xl">
             <Image
-              src={icone} // Correctly use the variable without quotes
+              src={icone} // Use the variable from config
               alt="chatbot" // Text alternative
               width={70}
               height={70}

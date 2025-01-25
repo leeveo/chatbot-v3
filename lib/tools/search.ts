@@ -51,7 +51,8 @@ export const searchTool = tool({
             maxResults: max_results,
             searchDepth: effectiveSearchDepth,
             includeDomains: include_domains,
-            excludeDomains: exclude_domains
+            excludeDomains: exclude_domains,
+            includeImages: true // Force image search
           })
         })
         if (!response.ok) {
@@ -108,9 +109,9 @@ async function tavilySearch(
     body: JSON.stringify({
       api_key: apiKey,
       query: query + domainQuery,
-      max_results: Math.max(maxResults, 5),
+      max_results: Math.max(maxResults, 2),
       search_depth: 'advanced', // Always use advanced mode
-      include_images: true,
+      include_images: true, // Force image search
       include_image_descriptions: includeImageDescriptions,
       include_answers: true,
       include_domains: includeDomains,
@@ -197,7 +198,7 @@ async function searxngSearch(
     const domainQuery = includeDomains.length > 0 ? ` site:${includeDomains.join(' OR ')}` : ''
     url.searchParams.append('q', query + domainQuery)
     url.searchParams.append('format', 'json')
-    url.searchParams.append('categories', 'general,images')
+    url.searchParams.append('categories', 'general,images') // Force image search
 
     // Apply search depth settings
     if (searchDepth === 'advanced') {

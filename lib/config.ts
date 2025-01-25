@@ -12,7 +12,7 @@ export const email: string = 'contact@leevea.fr'; // Adresse email réelle
 
 // Design
 export const couleur: string = '#0073e6'; // Couleur associée au branding de Leevea
-export const icone: string = '/logo_leevea.png'; // Chemin vers le logo spécifique
+export const icone: string = '/images/logo_leevea.png'; // Chemin vers le logo spécifique
 
 // Page d'accueil
 export const accueil: string = 'Bienvenue ! Je suis votre assistant virtuel pour vos recherches sur leevea.fr. 🤖';

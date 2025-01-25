@@ -48,9 +48,9 @@ export function ChatMessages({
   }
 
   return (
-    <div className="relative mx-auto px-4 w-full mt-5">
+    <div className="relative mx-auto px-4 w-full mt-5 ">
       {messages.map(message => (
-        <div key={message.id} className="mb-4 flex flex-col gap-4">
+        <div key={message.id} className="mb-4 flex flex-col gap-4 ">
           <RenderMessage
             message={message}
             messageId={message.id}

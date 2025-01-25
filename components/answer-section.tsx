@@ -22,13 +22,13 @@ export function AnswerSection({
   const enableShare = process.env.NEXT_PUBLIC_ENABLE_SHARE === 'true'
 
   const header = (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 ">
       <Text size={16} />
       <div>Votre réponse</div>
     </div>
   )
   const message = content ? (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 ">
       <BotMessage message={content} />
       {enableShare && chatId && (
         <ChatShare chatId={chatId} className="self-end" />
@@ -45,6 +45,7 @@ export function AnswerSection({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       showBorder={false}
+     
     >
       {message}
     </CollapsibleMessage>
