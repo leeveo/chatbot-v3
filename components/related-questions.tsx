@@ -44,7 +44,7 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
   const header = (
     <div className="flex items-center gap-1">
       <Repeat2 size={16} />
-      <div>Related</div>
+      <div>Voulez-vous en savoir plus à ce sujet ? </div>
     </div>
   )
 

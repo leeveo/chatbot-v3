@@ -1,12 +1,12 @@
-import { UserCircle2, Bot, ChevronDown } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { ChevronDown, Eye } from 'lucide-react'
+import Image from 'next/image'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger
 } from './ui/collapsible'
 import { Separator } from './ui/separator'
-import { cn } from '@/lib/utils'
-import { IconLogo } from './ui/icons'
 
 interface CollapsibleMessageProps {
   children: React.ReactNode
@@ -34,9 +34,9 @@ export function CollapsibleMessage({
       <div className="relative flex flex-col items-center">
         <div className={cn('mt-[10px]', role === 'assistant' && 'mt-4')}>
           {role === 'user' ? (
-            <UserCircle2 size={20} className="text-muted-foreground" />
+            <Eye size={20} className="text-muted-foreground" />
           ) : (
-            <IconLogo className="size-5" />
+            <Image src="/avatar1.svg" alt="Avatar" width={20} height={20} />
           )}
         </div>
       </div>

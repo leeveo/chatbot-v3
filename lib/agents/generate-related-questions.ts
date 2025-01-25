@@ -1,6 +1,7 @@
-import { CoreMessage, generateObject } from 'ai'
-import { relatedSchema } from '@/lib/schema/related'
-import { getModel } from '../utils/registry'
+import { includeDomains } from '@/lib/config'; // Import the config variables
+import { relatedSchema } from '@/lib/schema/related';
+import { CoreMessage, generateObject } from 'ai';
+import { getModel } from '../utils/registry';
 
 export async function generateRelatedQuestions(
   messages: CoreMessage[],
@@ -13,11 +14,11 @@ export async function generateRelatedQuestions(
 
   const result = await generateObject({
     model: getModel(model),
-    system: `As a professional web researcher, your task is to generate a set of three queries that explore the subject matter more deeply, building upon the initial query and the information uncovered in its search results.
+    system: `As a professional web researcher, your task is to generate a set of three queries that explore the subject matter more deeply providing from ${includeDomains[0]}, building upon the initial query and the information uncovered in its search results.
 
     For instance, if the original query was "Starship's third test flight key milestones", your output should follow this format:
 
-    Aim to create queries that progressively delve into more specific aspects, implications, or adjacent topics related to the initial query. The goal is to anticipate the user's potential information needs and guide them towards a more comprehensive understanding of the subject matter.
+    Aim to create queries that progressively delve into more specific aspects, implications, or adjacent topics related to the initial query and from ${includeDomains[0]}. The goal is to anticipate the user's potential information needs and guide them towards a more comprehensive understanding of the subject matter.
     Please match the language of the response to the user's language.`,
     messages: lastMessages,
     schema: relatedSchema

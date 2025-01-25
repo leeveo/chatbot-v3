@@ -1,14 +1,15 @@
-import { tool } from 'ai'
-import Exa from 'exa-js'
+import { includeDomains as configIncludeDomains } from '@/lib/config'
 import { searchSchema } from '@/lib/schema/search'
-import { sanitizeUrl } from '@/lib/utils'
 import {
   SearchResultImage,
-  SearchResults,
   SearchResultItem,
+  SearchResults,
   SearXNGResponse,
   SearXNGResult
 } from '@/lib/types'
+import { sanitizeUrl } from '@/lib/utils'
+import { tool } from 'ai'
+import Exa from 'exa-js'
 
 export const searchTool = tool({
   description: 'Search the web for information',
@@ -17,7 +18,7 @@ export const searchTool = tool({
     query,
     max_results,
     search_depth,
-    include_domains,
+    include_domains = configIncludeDomains,
     exclude_domains
   }) => {
     // Tavily API requires a minimum of 5 characters in the query
@@ -89,7 +90,7 @@ export const searchTool = tool({
 async function tavilySearch(
   query: string,
   maxResults: number = 10,
-  searchDepth: 'basic' | 'advanced' = 'basic',
+  searchDepth: 'basic' | 'advanced' = 'advanced',
   includeDomains: string[] = [],
   excludeDomains: string[] = []
 ): Promise<SearchResults> {
@@ -98,6 +99,7 @@ async function tavilySearch(
     throw new Error('TAVILY_API_KEY is not set in the environment variables')
   }
   const includeImageDescriptions = true
+  const domainQuery = includeDomains.length > 0 ? ` site:${includeDomains.join(' OR ')}` : ''
   const response = await fetch('https://api.tavily.com/search', {
     method: 'POST',
     headers: {
@@ -105,9 +107,9 @@ async function tavilySearch(
     },
     body: JSON.stringify({
       api_key: apiKey,
-      query,
+      query: query + domainQuery,
       max_results: Math.max(maxResults, 5),
-      search_depth: searchDepth,
+      search_depth: 'advanced', // Always use advanced mode
       include_images: true,
       include_image_descriptions: includeImageDescriptions,
       include_answers: true,
@@ -192,7 +194,8 @@ async function searxngSearch(
   try {
     // Construct the URL with query parameters
     const url = new URL(`${apiUrl}/search`)
-    url.searchParams.append('q', query)
+    const domainQuery = includeDomains.length > 0 ? ` site:${includeDomains.join(' OR ')}` : ''
+    url.searchParams.append('q', query + domainQuery)
     url.searchParams.append('format', 'json')
     url.searchParams.append('categories', 'general,images')
 
