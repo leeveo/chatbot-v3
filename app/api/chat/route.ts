@@ -16,6 +16,7 @@ export const maxDuration = 30
 
 const DEFAULT_MODEL = 'openai:gpt-4o-mini'
 
+// Assurez-vous que ce fichier est correctement configuré
 export async function POST(req: Request) {
   try {
     const { messages, id: chatId } = await req.json()
@@ -152,3 +153,5 @@ export async function POST(req: Request) {
     )
   }
 }
+
+// Supprimez ou renommez ce fichier pour éviter le conflit de route
