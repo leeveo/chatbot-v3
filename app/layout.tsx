@@ -13,12 +13,12 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Morphic'
+const title = 'Leevee - AI-powered answer engine'
 const description =
-  'A fully open-source AI-powered answer engine with a generative UI.'
+  'Un puissant chatbot IA .'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://morphic.sh'),
+  metadataBase: new URL('https://leevea.fr'),
   title,
   description,
   openGraph: {
