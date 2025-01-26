@@ -39,8 +39,8 @@ export function CollapsibleMessage({
                        <Image 
               src="/avatar1.svg" 
               alt="Avatar" 
-              width={40} 
-              height={40} 
+              width={30} 
+              height={30} 
               style={{
                 backgroundColor: 'white',
                 borderRadius: '50%',
