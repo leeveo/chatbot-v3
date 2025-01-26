@@ -145,7 +145,7 @@ async function tavilySearch(
             image.description !== undefined &&
             image.description !== ''
         )
-        .filter(image => includeDomains.some(domain => image.url.includes(domain))) // Filtrer les images par domaine
+        .filter((image: { url: string; description: string }) => includeDomains.some(domain => image.url.includes(domain))) // Filtrer les images par domaine
     : data.images
         .map((url: string) => sanitizeUrl(url))
         .filter(url => includeDomains.some(domain => url.includes(domain))) // Filtrer les images par domaine
