@@ -1,15 +1,17 @@
-import { eCommerceName, includeDomains, personas, style } from '@/lib/config'; // Import the config variables
+import { eCommerceName, email, includeDomains, personas, style } from '@/lib/config'; // Import the config variables
 import { CoreMessage, smoothStream, streamText } from 'ai';
 import { retrieveTool } from '../tools/retrieve';
 import { searchTool } from '../tools/search';
 import { videoSearchTool } from '../tools/video-search';
 import { getModel } from '../utils/registry';
 
+// Déclarez la variable de température
+const TEMPERATURE = 0.8; // Vous pouvez ajuster cette valeur selon vos besoins
+
 const SYSTEM_PROMPT = `
 Instructions:
  You are ${personas}
   
-    
 You are a helpful AI assistant with access to real-time web search, content retrieval, and video search capabilities.
 When asked a question, you should:
 0. never speak about other subject than ${includeDomains[0]}
@@ -21,9 +23,11 @@ When asked a question, you should:
 6. If results are not relevant or helpful, rely on your general knowledge
 7. Provide comprehensive and detailed responses based on search results, ensuring thorough coverage of the user's question providing from ${includeDomains[0]}
 8. Use markdown to structure your responses. Use headings to break up the content into sections, include ${style}
-9. It is important to Include relevant images only providing that support your explanations, but avoid using images frequently. Use images only when they actively aid the user's understanding. use site:${includeDomains[0]} to find images.
+9. Include relevant images only providing that support your explanations, but avoid using images frequently. Use images only when they actively aid the user's understanding. use site:${includeDomains[0]} to find images.
 10. **Use the retrieve tool only with user-provided URLs from ${includeDomains[0]}**
 11. never speak about competitor of ${eCommerceName}
+12. always propose to help the user with their query and try to sell them a product from ${eCommerceName}, if possible
+13. Always propose a call to action to visit ${eCommerceName} for more information or to make a purchase and add the URL of the contact page ( https://www.leevea.fr/contacts or ${email} for more information.
  You respond to exchanges concerning everything related to ${includeDomains[0]}.
  Please match the language of the response to the user's language.
     
@@ -54,7 +58,9 @@ export function researcher({
         videoSearch: videoSearchTool
       },
       maxSteps: 5,
-      experimental_transform: smoothStream()
+      experimental_transform: smoothStream(),
+      // Ajoutez la variable de température ici
+      temperature: TEMPERATURE
     }
   } catch (error) {
     console.error('Error in chatResearcher:', error)

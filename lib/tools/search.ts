@@ -37,6 +37,8 @@ export const searchTool = tool({
     console.log(
       `Using search API: ${searchAPI}, Search Depth: ${effectiveSearchDepth}`
     )
+    console.log(`Query: ${query}, Max Results: ${max_results}, Search Depth: ${search_depth}`);
+    console.log(`Include Domains: ${include_domains}, Exclude Domains: ${exclude_domains}`);
 
     try {
       if (searchAPI === 'searxng' && effectiveSearchDepth === 'advanced') {
@@ -61,6 +63,7 @@ export const searchTool = tool({
           )
         }
         searchResult = await response.json()
+        console.log('Advanced SearXNG search result:', searchResult);
       } else {
         searchResult = await (searchAPI === 'tavily'
           ? tavilySearch
@@ -73,6 +76,7 @@ export const searchTool = tool({
           include_domains,
           exclude_domains
         )
+        console.log(`${searchAPI} search result:`, searchResult);
       }
     } catch (error) {
       console.error('Search API error:', error)
@@ -126,6 +130,7 @@ async function tavilySearch(
   }
 
   const data = await response.json()
+  console.log('Tavily search result:', data);
   const processedImages = includeImageDescriptions
     ? data.images
         .map(({ url, description }: { url: string; description: string }) => ({
@@ -140,7 +145,18 @@ async function tavilySearch(
             image.description !== undefined &&
             image.description !== ''
         )
-    : data.images.map((url: string) => sanitizeUrl(url))
+        .filter(image => includeDomains.some(domain => image.url.includes(domain))) // Filtrer les images par domaine
+    : data.images
+        .map((url: string) => sanitizeUrl(url))
+        .filter(url => includeDomains.some(domain => url.includes(domain))) // Filtrer les images par domaine
+
+  // Add default images if no images are found
+  if (processedImages.length === 0) {
+    processedImages.push({
+      url: 'https://example.com/default-image.jpg',
+      description: 'Default image'
+    })
+  }
 
   return {
     ...data,
@@ -167,7 +183,7 @@ async function exaSearch(
     includeDomains,
     excludeDomains
   })
-
+  console.log('Exa search result:', exaResults);
   return {
     results: exaResults.results.map((result: any) => ({
       title: result.title,
@@ -175,7 +191,7 @@ async function exaSearch(
       content: result.highlight || result.text
     })),
     query,
-    images: [],
+    images: [], // No image search in Exa
     number_of_results: exaResults.results.length
   }
 }
@@ -228,7 +244,7 @@ async function searxngSearch(
     }
 
     const data: SearXNGResponse = await response.json()
-
+    console.log('SearXNG search result:', data);
     // Separate general results and image results, and limit to maxResults
     const generalResults = data.results
       .filter(result => !result.img_src)
