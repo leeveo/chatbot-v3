@@ -148,7 +148,7 @@ async function tavilySearch(
         .filter((image: { url: string; description: string }) => includeDomains.some(domain => image.url.includes(domain))) // Filtrer les images par domaine
     : data.images
         .map((url: string) => sanitizeUrl(url))
-        .filter(url => includeDomains.some(domain => url.includes(domain))) // Filtrer les images par domaine
+        .filter((url: string) => includeDomains.some(domain => url.includes(domain))) // Filtrer les images par domaine
 
   // Add default images if no images are found
   if (processedImages.length === 0) {
