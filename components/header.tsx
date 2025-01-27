@@ -7,10 +7,10 @@ export const Header: React.FC = () => {
   return (
     <>
       <header
-        className="fixed w-full h-[120px] p-1 md:p-2 flex justify-between items-center z-10 backdrop-blur md:backdrop-blur-none"
+        className="fixed w-full h-[120px] p-1 md:p-2 flex justify-center items-center z-10 backdrop-blur md:backdrop-blur-none"
         style={{ backgroundColor: couleur }} // Use style prop for background color
       >
-        <div className="flex items-center gap-4 pl-4">
+        <div className="flex items-center gap-4">
           {/* Image ronde */}
           <div className="rounded-full mx-auto mt-2 border-solid border-4 bg-white border-white-600 shadow-xl">
             <Image
@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Text aligned to the right of the image */}
-          <div className="flex flex-col text-white">
+          <div className="flex flex-col text-white items-center">
             <span className="font-bold text-sm italic">{accueil}</span>
             <span className="text-sm">{soustitre}</span>
           </div>
