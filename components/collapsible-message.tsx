@@ -28,7 +28,7 @@ export function CollapsibleMessage({
   onOpenChange,
   showBorder = true
 }: CollapsibleMessageProps) {
-  const content =       <div className="py-2 flex-1 gap-2 p-2 bg-red-50 rounded-2xl ">{children}</div>
+  const content =       <div className="py-2 flex-1 gap-2 p-2 bg-blue-50 rounded-2xl ">{children}</div>
 
   return (
     <div className="flex gap-3">
