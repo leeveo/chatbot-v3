@@ -1,6 +1,7 @@
 import { getChat, saveChat } from '@/lib/actions/chat'
 import { generateRelatedQuestions } from '@/lib/agents/generate-related-questions'
 import { researcher } from '@/lib/agents/researcher'
+import { eCommerceName } from '@/lib/config'; // Import the eCommerceName variable
 import { ExtendedCoreMessage } from '@/lib/types'
 import { convertToExtendedCoreMessages } from '@/lib/utils'
 import { isProviderEnabled } from '@/lib/utils/registry'
@@ -105,7 +106,7 @@ export async function POST(req: Request) {
                 const savedChat = (await getChat(chatId)) ?? {
                   messages: [],
                   createdAt: new Date(),
-                  userId: 'anonymous',
+                  userId: eCommerceName,
                   path: `/search/${chatId}`,
                   title: messages[0].content,
                   id: chatId

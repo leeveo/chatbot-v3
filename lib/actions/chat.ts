@@ -1,9 +1,10 @@
 'use server'
 
+import { eCommerceName } from '@/lib/config'; // Import the eCommerceName variable
+import { getRedisClient, RedisWrapper } from '@/lib/redis/config'
+import { type Chat } from '@/lib/types'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { type Chat } from '@/lib/types'
-import { getRedisClient, RedisWrapper } from '@/lib/redis/config'
 
 async function getRedis(): Promise<RedisWrapper> {
   return await getRedisClient()
@@ -62,7 +63,7 @@ export async function getChats(userId?: string | null) {
   }
 }
 
-export async function getChat(id: string, userId: string = 'anonymous') {
+export async function getChat(id: string, userId: string = eCommerceName) {
   const redis = await getRedis()
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
@@ -88,7 +89,7 @@ export async function getChat(id: string, userId: string = 'anonymous') {
 }
 
 export async function clearChats(
-  userId: string = 'anonymous'
+  userId: string = eCommerceName
 ): Promise<{ error?: string }> {
   const redis = await getRedis()
   const userChatKey = getUserChatKey(userId)
@@ -109,7 +110,7 @@ export async function clearChats(
   redirect('/')
 }
 
-export async function saveChat(chat: Chat, userId: string = 'anonymous') {
+export async function saveChat(chat: Chat, userId: string = eCommerceName) {
   try {
     const redis = await getRedis()
     const pipeline = redis.pipeline()
@@ -141,7 +142,7 @@ export async function getSharedChat(id: string) {
   return chat
 }
 
-export async function shareChat(id: string, userId: string = 'anonymous') {
+export async function shareChat(id: string, userId: string = eCommerceName) {
   const redis = await getRedis()
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
