@@ -14,7 +14,7 @@ import { getModel } from '../utils/registry';
 
 // Déclarez la variable de température dynamique
 function getTemperature(messages: CoreMessage[]): number {
-  return messages.some(message => message.content.includes('?')) ? 0.9 : 0.6; // Plus élevé pour des réponses créatives
+  return messages.some(message => (message.content as string).includes('?')) ? 0.9 : 0.6; // Plus élevé pour des réponses créatives
 }
 
 // Prompt amélioré avec structure Markdown enrichie
