@@ -1,5 +1,5 @@
 // src/lib/config.ts ou lib/config.ts (selon votre structure)
-export const includeDomains: string[] = ['https://www.parcoursup.gouv.fr/', 'https://ants.gouv.fr/'];
+export const includeDomains: string[] = ['https://www.parcoursup.gouv.fr/'];
 export const addwebpage: string[] = ['https://dossierappel.parcoursup.fr/Candidat/carte','https://www.onisep.fr/recherche?context=metier'];
 
 export const eCommerceName: string = 'Parcoursup'; // Nom spécifique
