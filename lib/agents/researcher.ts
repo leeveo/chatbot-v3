@@ -166,7 +166,7 @@ export async function researcher({
       const urlMatch = lastMessage.match(/https:\/\/www\.linkedin\.com\/in\/[^\s]+/);
       if (urlMatch) {
         console.log(`LinkedIn URL found in message: ${urlMatch[0]}`); // Log the LinkedIn URL found
-        const results = await retrieveTool.execute({ url: urlMatch[0] });
+        const results = await retrieveTool.execute({ url: urlMatch[0] }, {});
         if (results) {
           linkedInData = results.results[0].content;
           if (results.results[0].images && results.results[0].images.length > 0) {
@@ -180,7 +180,7 @@ export async function researcher({
       const postUrlMatch = lastMessage.match(/https:\/\/www\.linkedin\.com\/feed\/update\/urn:li:activity:[^\s]+/);
       if (postUrlMatch) {
         console.log(`LinkedIn post URL found in message: ${postUrlMatch[0]}`); // Log the LinkedIn post URL found
-        const postsResults = await retrievePostsTool.execute({ url: postUrlMatch[0] });
+        const postsResults = await retrievePostsTool.execute({ url: postUrlMatch[0] }, {});
         if (postsResults) {
           linkedInPostsData = postsResults.results[0].content;
           console.log(`Fetched LinkedIn posts data: ${linkedInPostsData}`); // Log the fetched LinkedIn posts data
@@ -191,7 +191,7 @@ export async function researcher({
     }
 
     if (lastMessage.toLowerCase().includes('dernières nouvelles en intelligence artificielle')) {
-      const newsResults = await retrieveGoogleNewsTool.execute({});
+      const newsResults = await retrieveGoogleNewsTool.execute({}, {});
       if (newsResults) {
         googleNewsData = newsResults.results[0].content;
         console.log(`Fetched Google News data: ${googleNewsData}`); // Log the fetched Google News data
