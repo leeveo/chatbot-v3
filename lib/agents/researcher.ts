@@ -37,7 +37,8 @@ export async function researcher({
         );
         if (results && results.results && results.results.length > 0) {
           linkedInData = results.results[0].content;
-          if (results.results[0].images && results.results[0].images.length > 0) {
+          // Vérifiez si la propriété images existe et est un tableau
+          if (Array.isArray(results.results[0].images) && results.results[0].images.length > 0) {
             profilePicture = results.results[0].images[0];
           }
           console.log(`Fetched LinkedIn data: ${linkedInData}`); // Log the fetched LinkedIn data
