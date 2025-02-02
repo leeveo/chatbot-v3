@@ -153,7 +153,7 @@ export async function researcher({
 }: {
   messages: CoreMessage[]
   model: string
-}): ResearcherReturn {
+}): Promise<ResearcherReturn> {
   try {
     const currentDate = new Date().toLocaleString()
     const lastMessage = messages[messages.length - 1].content;
