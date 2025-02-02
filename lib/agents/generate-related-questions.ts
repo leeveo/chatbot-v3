@@ -1,7 +1,7 @@
 import { includeDomains } from '@/lib/config'; // Import the config variables
 import { relatedSchema } from '@/lib/schema/related';
 import { CoreMessage, generateObject } from 'ai';
-import { getModel } from '../utils/registry';
+import { fetchSimilarProfiles, getModel } from '../utils/registry';
 
 export async function generateRelatedQuestions(
   messages: CoreMessage[],
@@ -23,6 +23,23 @@ export async function generateRelatedQuestions(
     messages: lastMessages,
     schema: relatedSchema
   })
+
+  // Check if the last message contains a LinkedIn profile URL
+  const lastMessageContent = lastMessages[0].content;
+  if (lastMessageContent.includes('linkedin.com/in/')) {
+    const urlMatch = lastMessageContent.match(/https:\/\/www\.linkedin\.com\/in\/[^\s]+/);
+    if (urlMatch) {
+      const similarProfilesData = await fetchSimilarProfiles(urlMatch[0]);
+      const similarProfiles = JSON.parse(similarProfilesData);
+
+      // Add similar profiles to the result
+      result.object.similarProfiles = similarProfiles.profiles.map((profile: any) => ({
+        name: `${profile.firstName} ${profile.lastName}`,
+        headline: profile.headline,
+        url: profile.url
+      }));
+    }
+  }
 
   return result
 }

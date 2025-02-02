@@ -1,17 +1,17 @@
-import { getChat, saveChat } from '@/lib/actions/chat'
-import { generateRelatedQuestions } from '@/lib/agents/generate-related-questions'
-import { researcher } from '@/lib/agents/researcher'
+import { getChat, saveChat } from '@/lib/actions/chat';
+import { generateRelatedQuestions } from '@/lib/agents/generate-related-questions';
+import { researcher } from '@/lib/agents/researcher';
 import { eCommerceName } from '@/lib/config'; // Import the eCommerceName variable
-import { ExtendedCoreMessage } from '@/lib/types'
-import { convertToExtendedCoreMessages } from '@/lib/utils'
-import { isProviderEnabled } from '@/lib/utils/registry'
+import { ExtendedCoreMessage } from '@/lib/types';
+import { convertToExtendedCoreMessages } from '@/lib/utils';
+import { isProviderEnabled } from '@/lib/utils/registry';
 import {
   convertToCoreMessages,
   createDataStreamResponse,
   JSONValue,
   streamText
-} from 'ai'
-import { cookies } from 'next/headers'
+} from 'ai';
+import { cookies } from 'next/headers';
 
 export const maxDuration = 30
 

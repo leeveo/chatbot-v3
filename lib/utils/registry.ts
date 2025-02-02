@@ -4,6 +4,7 @@ import { deepseek } from '@ai-sdk/deepseek'
 import { google } from '@ai-sdk/google'
 import { createOpenAI, openai } from '@ai-sdk/openai'
 import { experimental_createProviderRegistry as createProviderRegistry } from 'ai'
+import https from 'https'
 import { createOllama } from 'ollama-ai-provider'
 
 export const registry = createProviderRegistry({
@@ -68,4 +69,156 @@ export function isProviderEnabled(providerId: string): boolean {
     default:
       return false
   }
+}
+
+export function fetchLinkedInData(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    console.log(`Fetching LinkedIn data for URL: ${url}`); // Log the URL being fetched
+    const options = {
+      method: 'GET',
+      hostname: 'linkedin-api8.p.rapidapi.com',
+      port: null,
+      path: `/get-profile-data-by-url?url=${encodeURIComponent(url)}`,
+      headers: {
+        'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+        'x-rapidapi-host': 'linkedin-api8.p.rapidapi.com'
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      const chunks: Uint8Array[] = [];
+      console.log(`LinkedIn API response status: ${res.statusCode}`); // Log the response status code
+
+      res.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+
+      res.on('end', () => {
+        const body = Buffer.concat(chunks);
+        console.log(`LinkedIn API response body: ${body.toString()}`); // Log the response body
+        resolve(body.toString());
+      });
+    });
+
+    req.on('error', (e) => {
+      console.error(`LinkedIn API request error: ${e.message}`); // Log any errors
+      reject(e);
+    });
+
+    req.end();
+  });
+}
+
+export function fetchLinkedInPosts(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    console.log(`Fetching LinkedIn post for URL: ${url}`); // Log the URL being fetched
+    const options = {
+      method: 'GET',
+      hostname: 'linkedin-api8.p.rapidapi.com',
+      port: null,
+      path: `/get-post?url=${encodeURIComponent(url)}`,
+      headers: {
+        'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+        'x-rapidapi-host': 'linkedin-api8.p.rapidapi.com'
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      const chunks: Uint8Array[] = [];
+      console.log(`LinkedIn API response status: ${res.statusCode}`); // Log the response status code
+
+      res.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+
+      res.on('end', () => {
+        const body = Buffer.concat(chunks);
+        console.log(`LinkedIn API response body: ${body.toString()}`); // Log the response body
+        resolve(body.toString());
+      });
+    });
+
+    req.on('error', (e) => {
+      console.error(`LinkedIn API request error: ${e.message}`); // Log any errors
+      reject(e);
+    });
+
+    req.end();
+  });
+}
+
+export function fetchGoogleNews(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    console.log(`Fetching latest Google News`); // Log the request
+    const options = {
+      method: 'GET',
+      hostname: 'google-news13.p.rapidapi.com',
+      port: null,
+      path: '/latest?lr=fr-FR',
+      headers: {
+        'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+        'x-rapidapi-host': 'google-news13.p.rapidapi.com'
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      const chunks: Uint8Array[] = [];
+      console.log(`Google News API response status: ${res.statusCode}`); // Log the response status code
+
+      res.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+
+      res.on('end', () => {
+        const body = Buffer.concat(chunks);
+        console.log(`Google News API response body: ${body.toString()}`); // Log the response body
+        resolve(body.toString());
+      });
+    });
+
+    req.on('error', (e) => {
+      console.error(`Google News API request error: ${e.message}`); // Log any errors
+      reject(e);
+    });
+
+    req.end();
+  });
+}
+
+export function fetchSimilarProfiles(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    console.log(`Fetching similar profiles for URL: ${url}`); // Log the URL being fetched
+    const options = {
+      method: 'GET',
+      hostname: 'linkedin-data-api.p.rapidapi.com',
+      port: null,
+      path: `/similar-profiles?url=${encodeURIComponent(url)}`,
+      headers: {
+        'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+        'x-rapidapi-host': 'linkedin-data-api.p.rapidapi.com'
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      const chunks: Uint8Array[] = [];
+      console.log(`LinkedIn API response status: ${res.statusCode}`); // Log the response status code
+
+      res.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+
+      res.on('end', () => {
+        const body = Buffer.concat(chunks);
+        console.log(`LinkedIn API response body: ${body.toString()}`); // Log the response body
+        resolve(body.toString());
+      });
+    });
+
+    req.on('error', (e) => {
+      console.error(`LinkedIn API request error: ${e.message}`); // Log any errors
+      reject(e);
+    });
+
+    req.end();
+  });
 }
