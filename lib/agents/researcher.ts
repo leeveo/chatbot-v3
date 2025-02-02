@@ -170,13 +170,10 @@ export async function researcher({
           { url: urlMatch[0] },
           { toolCallId: 'retrieve-linkedin-profile', messages: [] }
         );
-        if (results) {
+        if (results && results.results && results.results.length > 0) {
           linkedInData = results.results[0].content;
-          if (results.results[0].images && results.results[0].images.length > 0) {
-            profilePicture = results.results[0].images[0];
-          }
+          // Suppression de l'accès à la propriété images
           console.log(`Fetched LinkedIn data: ${linkedInData}`); // Log the fetched LinkedIn data
-          console.log(`Fetched LinkedIn profile picture: ${profilePicture}`); // Log the fetched LinkedIn profile picture
         }
       }
 
@@ -187,7 +184,7 @@ export async function researcher({
           { url: postUrlMatch[0] },
           { toolCallId: 'retrieve-linkedin-post', messages: [] }
         );
-        if (postsResults) {
+        if (postsResults && postsResults.results && postsResults.results.length > 0) {
           linkedInPostsData = postsResults.results[0].content;
           console.log(`Fetched LinkedIn posts data: ${linkedInPostsData}`); // Log the fetched LinkedIn posts data
         } else {
@@ -201,13 +198,13 @@ export async function researcher({
         {},
         { toolCallId: 'retrieve-google-news', messages: [] }
       );
-      if (newsResults) {
+      if (newsResults && newsResults.results && newsResults.results.length > 0) {
         googleNewsData = newsResults.results[0].content;
         console.log(`Fetched Google News data: ${googleNewsData}`); // Log the fetched Google News data
       }
     }
 
-    const systemPromptWithLinkedInData = `${SYSTEM_PROMPT}\nCurrent date and time: ${currentDate}\n${linkedInData}\nProfile Picture: ${profilePicture}\n${linkedInPostsData}\n${googleNewsData}`;
+    const systemPromptWithLinkedInData = `${SYSTEM_PROMPT}\nCurrent date and time: ${currentDate}\n${linkedInData}\n${linkedInPostsData}\n${googleNewsData}`;
 
     return {
       model: getModel(model),
