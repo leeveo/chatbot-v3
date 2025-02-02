@@ -25,7 +25,7 @@ export async function generateRelatedQuestions(
   })
 
   // Check if the last message contains a LinkedIn profile URL
-  const lastMessageContent = lastMessages[0].content;
+  const lastMessageContent: string = lastMessages[0].content;
   if (lastMessageContent.includes('linkedin.com/in/')) {
     const urlMatch = lastMessageContent.match(/https:\/\/www\.linkedin\.com\/in\/[^\s]+/);
     if (urlMatch) {
