@@ -33,14 +33,11 @@ export async function generateRelatedQuestions(
       const similarProfiles = JSON.parse(similarProfilesData);
 
       // Add similar profiles to the result
-      result.object.items.push({
-        type: 'similarProfiles',
-        data: similarProfiles.profiles.map((profile: any) => ({
-          name: `${profile.firstName} ${profile.lastName}`,
-          headline: profile.headline,
-          url: profile.url
-        }))
-      });
+      result.object.items.push(...similarProfiles.profiles.map((profile: any) => ({
+        name: `${profile.firstName} ${profile.lastName}`,
+        headline: profile.headline,
+        url: profile.url
+      })));
     }
   }
 
