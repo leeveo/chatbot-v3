@@ -56,7 +56,7 @@ Headline: ${linkedInProfile.headline}
 Location: ${linkedInProfile.geo?.full}
 Summary: ${linkedInProfile.summary}
 Current Position: ${linkedInProfile.position?.[0]?.title} at ${linkedInProfile.position?.[0]?.companyName}
-Skills: ${linkedInProfile.skills?.map(skill => skill.name).join(', ')}
+Skills: ${linkedInProfile.skills?.map((skill: { name: string }) => skill.name).join(', ')}
 Photo: ${linkedInProfile.profilePicture}
 `
 
