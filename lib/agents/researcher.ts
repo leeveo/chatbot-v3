@@ -156,7 +156,7 @@ export async function researcher({
 }): Promise<ResearcherReturn> {
   try {
     const currentDate = new Date().toLocaleString()
-    const lastMessage = messages[messages.length - 1].content;
+    const lastMessage = messages[messages.length - 1].content as string;
     let linkedInData = '';
     let linkedInPostsData = '';
     let googleNewsData = '';
