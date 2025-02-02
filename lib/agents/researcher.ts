@@ -195,7 +195,7 @@ export async function researcher({
 
     if (lastMessage.toLowerCase().includes('dernières nouvelles en intelligence artificielle')) {
       const newsResults = await retrieveGoogleNewsTool.execute(
-        {},
+        { url: 'https://news.google.com' },
         { toolCallId: 'retrieve-google-news', messages: [] }
       );
       if (newsResults && newsResults.results && newsResults.results.length > 0) {
