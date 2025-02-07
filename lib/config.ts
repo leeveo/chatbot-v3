@@ -12,7 +12,7 @@ export const email: string = 'contact@oceanopolis-acts.fr'; // Adresse email ré
 
 // Design
 export const couleur: string = '#2949b3'; // Couleur associée à l'océan
-export const icone: string = '/logo_oceanopolis_acts.png'; // Chemin vers le logo spécifique
+export const icone: string = '/logo_oceanopolis-act.jpg'; // Chemin vers le logo spécifique
 
 // Page d'accueil
 export const accueil: string = 'Bienvenue ! Je suis votre assistant virtuel pour découvrir et soutenir les actions d\'Océanopolis Acts. 🌊';
